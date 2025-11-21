@@ -1,8 +1,0 @@
-Database Name: P6_9
-Authors: Hafi, Ingmar, Aqif, HM
-
-Table Name: StudentRecords
-ID        Name                Programme                     Mark
-2201234   Isaac Teo           Computer Science              63.40
-2304567   John Levoy          Digital Supply Chain          85.90
-2401234   Michelle Lee        Information Security          67.80
