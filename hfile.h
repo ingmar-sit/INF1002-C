@@ -2,7 +2,7 @@
 #define HFILE_H
 
 #define MAX_RECORDS 100
-#define FILENAME "Sample-CMS.txt"
+#define FILENAME "P6_9-CMS.txt"
 
 // Struct to hold student data
 typedef struct {
@@ -21,14 +21,18 @@ void openDatabase();
 void showAllRecords();
 void insertRecord();
 void queryRecord();
-void updateRecord();
+void updateRecord(char* input);
 void deleteRecord();
 void saveDatabase();
 void sortByID(int descending);
 void sortByMark(int descending);
 void showSummary();
 int findRecordIndexByID(int id);
-void loadFromFile();
+int loadFromFile();
 void saveToFile();
+void showAllWithGrades();
+void showGPAForID(char* input);
+float getGPAFromMark(float mark);
+const char* getGradeFromMark(float mark);
 
 #endif // HFILE_H

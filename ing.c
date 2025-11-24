@@ -5,11 +5,18 @@
 #include "common.c"
 
 
-//Query Record
-void queryRecord() {
+void queryRecord(char* command) {
     int id;
-    printf("Enter Student ID to query: ");
-    scanf("%d", &id);
+
+    // Extract ID from the command, e.g. "QUERY ID=2301234"
+    char* idPtr = strstr(command, "ID=");
+    if (idPtr != NULL) {
+        sscanf(idPtr + 3, "%d", &id);
+    }
+    else {
+        printf("CMS: Missing ID field.\n");
+        return;
+    }
 
     int index = findRecordIndexByID(id);
     if (index == -1) {
@@ -17,8 +24,12 @@ void queryRecord() {
     }
     else {
         printf("CMS: The record with ID=%d is found in the data table.\n", id);
-        printf("ID\tName\t\tProgramme\t\tMark\n");
-        printf("%d\t%-10s\t%-10s\t%.2f\n", records[index].id, records[index].name, records[index].programme, records[index].mark);
+        printf("%-10s%-20s%-30s%s\n", "ID", "Name", "Programme", "Mark");
+        printf("%-10d%-20s%-30s%.2f\n",
+            records[index].id,
+            records[index].name,
+            records[index].programme,
+            records[index].mark);
     }
 }
 

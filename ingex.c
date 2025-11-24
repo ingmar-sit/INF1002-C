@@ -1,48 +1,68 @@
-#include "hfile.h"  // Include the header file for declarations and struct definition
+#include "hfile.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "common.c"
 
-
-//Open file
+// FUNCTION: openDatabase()
+// PURPOSE: Initialize the database by loading all records from the file
+// APPROACH: We call loadFromFile() which handles reading the file and populating the records array. Once loaded, we print a confirmation message.
+// WHY THIS WORKS: Separating file loading into its own function keeps the code modular and lets us reuse it in other parts (like reload operations)
 void openDatabase() {
-    loadFromFile();
-    printf("CMS: The database file \"%s\" is successfully opened.\n", FILENAME);
+    int load = loadFromFile();
+    if (load == 0){
+        printf("CMS: The database file \"%s\" is successfully opened.\n", FILENAME);
+    }
 }
 
-void loadFromFile() {
+// FUNCTION: loadFromFile()
+// PURPOSE: Read student records from a text file with fixed-width column formatting
+//
+// FILE FORMAT STRUCTURE:
+// - Lines 0-3: Metadata (database name, authors, table name, blank line)
+// - Line 4: Header row (ID Name Programme Mark)
+// - Lines 5+: Actual student records in fixed-width format
+//
+// COLUMN POSITIONS (fixed-width):
+// - ID: positions 0-9 (10 chars)
+// - Name: positions 10-29 (20 chars)
+// - Programme: positions 30-59 (30 chars)
+// - Mark: positions 60+ (remaining)
+//
+// PARSING STRATEGY:
+// 1. Open the file and check if it exists
+// 2. Skip all metadata and header lines (first 5 lines total)
+// 3. For each remaining line, use strncpy to extract data from fixed positions
+// 4. Trim trailing spaces from extracted strings (important for clean data)
+// 5. Convert strings to appropriate types (atoi for ID, atof for Mark)
+// 6. Store in records array and increment counter
+//
+// WHY FIXED-WIDTH: The file uses padding/spacing instead of delimiters, so we have to extract by position. This avoids issues with spaces in names/programmes.
+int loadFromFile() {
     FILE* file = fopen(FILENAME, "r");
     if (!file) {
         printf("CMS: Error opening the file.\n");
-        return;
+        return 1;
     }
 
     char line[256];
-    // Reset numRecords to 0 to avoid accumulation from previous loads
-    numRecords = 0;
+    numRecords = 0;  // Reset to avoid double-loading on subsequent calls
 
-    // Skip the metadata lines (Database Name, Authors, Table Name)
+    // Skip metadata lines at the top of the file
     fgets(line, sizeof(line), file);  // "Database Name: P6_9 CMS"
     fgets(line, sizeof(line), file);  // "Authors: INGMAR AQIF HAFIZHAH HONG MING"
     fgets(line, sizeof(line), file);  // Blank line
     fgets(line, sizeof(line), file);  // "Table Name: StudentRecords"
+    fgets(line, sizeof(line), file);  // "ID Name Programme Mark" (header)
 
-    // Skip the header line (ID Name Programme Mark)
-    fgets(line, sizeof(line), file);  // "ID Name Programme Mark"
-
-    // Read each student record from the file using fixed-width format
+    // Read each student record line by line
     while (fgets(line, sizeof(line), file)) {
-        if (strlen(line) < 10) continue;  // Skip empty lines
+        if (strlen(line) < 10) continue;  // Skip empty/malformed lines
 
         char idStr[11], nameStr[21], progStr[31], markStr[20];
 
-        // Extract fixed-width columns (based on your format)
-        // ID: positions 0-9 (10 chars)
-        // Name: positions 10-29 (20 chars)
-        // Programme: positions 30-59 (30 chars)
-        // Mark: positions 60+ (remaining)
-
+        // Extract data from fixed column positions
+        // Using strncpy ensures we don't read beyond the specified width
         strncpy(idStr, line, 10);
         idStr[10] = '\0';
 
@@ -54,22 +74,20 @@ void loadFromFile() {
 
         strcpy(markStr, line + 60);
 
-        // Trim trailing spaces from all fields
+        // Trim trailing spaces from each field
+        // This is necessary because fixed-width format pads with spaces
         int len;
 
-        // Trim ID
         len = strlen(idStr);
         while (len > 0 && idStr[len - 1] == ' ') idStr[--len] = '\0';
 
-        // Trim Name
         len = strlen(nameStr);
         while (len > 0 && nameStr[len - 1] == ' ') nameStr[--len] = '\0';
 
-        // Trim Programme
         len = strlen(progStr);
         while (len > 0 && progStr[len - 1] == ' ') progStr[--len] = '\0';
 
-        // Convert and store
+        // Store the converted data into our records array
         records[numRecords].id = atoi(idStr);
         strcpy(records[numRecords].name, nameStr);
         strcpy(records[numRecords].programme, progStr);
@@ -79,9 +97,23 @@ void loadFromFile() {
     }
 
     fclose(file);
+	return 0;
 }
 
-//Show all records
+
+
+// FUNCTION: showAllRecords()
+// PURPOSE: Display all loaded student records in a formatted table
+//
+// FORMATTING APPROACH:
+// - Use printf with format specifiers for column alignment
+// - %-10s means left-aligned string in 10-character width
+// - %-20s means left-aligned string in 20-character width, etc.
+// - %.2f means float with 2 decimal places
+// - Header row uses same widths to match data rows
+//
+// WHY THIS LAYOUT: The fixed widths match our file format, making it easy
+// to verify data was loaded correctly and to compare with file contents.
 void showAllRecords() {
     printf("CMS: Here are all the records found in the table \"StudentRecords\".\n");
     printf("%-10s%-20s%-30s%s\n", "ID", "Name", "Programme", "Mark");
@@ -89,10 +121,6 @@ void showAllRecords() {
         printf("%-10d%-20s%-30s%.2f\n", records[i].id, records[i].name, records[i].programme, records[i].mark);
     }
 }
-
-// ============================================================
-// INSERT RECORD FUNCTION
-// ============================================================
 
 /**
  * insertRecord - Adds a new student record to the database
