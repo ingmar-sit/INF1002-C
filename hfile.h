@@ -19,10 +19,10 @@ extern int numRecords;
 // Function declarations (prototypes)
 void openDatabase();
 void showAllRecords();
-void insertRecord();
-void queryRecord();
+void insertRecord(char* command);
+void queryRecord(char* command);
 void updateRecord(char* input);
-void deleteRecord();
+void deleteRecord(char* command);
 void saveDatabase();
 void sortByID(int descending);
 void sortByMark(int descending);
@@ -34,5 +34,9 @@ void showAllWithGrades();
 void showGPAForID(char* input);
 float getGPAFromMark(float mark);
 const char* getGradeFromMark(float mark);
+int isValidID(const char* str);
+int isValidProgramme(const char* str);
+int isValidName(const char* str);
+int isValidMark(const char* str);
 
 #endif // HFILE_H
