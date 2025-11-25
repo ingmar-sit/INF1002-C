@@ -19,7 +19,7 @@ int getCommandType(const char* command) {
     if (strcmp(command, "SHOW ALL") == 0) return 2;
     if (strcmp(command, "SAVE") == 0) return 7;
     if (strcmp(command, "SHOW SUMMARY") == 0) return 12;
-    if (strcmp(command, "SHOW ALL WITH GRADES") == 0) return 12;
+    if (strcmp(command, "SHOW ALL WITH GRADES") == 0) return 13;
 
     // Sorting commands
     if (strcmp(command, "SHOW ALL SORT BY ID") == 0 ||
@@ -34,7 +34,7 @@ int getCommandType(const char* command) {
     if (strncmp(command, "QUERY", 5) == 0) return 4;
     if (strncmp(command, "UPDATE", 6) == 0) return 5;
     if (strncmp(command, "DELETE", 6) == 0) return 6;
-    if (strncmp(command, "SHOW GPA ID", 12) == 0) return 13;
+    if (strncmp(command, "SHOW GPA ID", 11) == 0) return 14;
 
     return 0;  // Invalid command
 }
