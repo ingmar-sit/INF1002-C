@@ -21,13 +21,20 @@ int getCommandType(const char* command) {
     if (strcmp(command, "SHOW SUMMARY") == 0) return 12;
     if (strcmp(command, "SHOW ALL WITH GRADES") == 0) return 13;
 
-    // Sorting commands
+    // Sorting commands - ID
     if (strcmp(command, "SHOW ALL SORT BY ID") == 0 ||
         strcmp(command, "SHOW ALL SORT BY ID ASCENDING") == 0) return 8;
     if (strcmp(command, "SHOW ALL SORT BY ID DESCENDING") == 0) return 9;
+
+    // Sorting commands - Mark
     if (strcmp(command, "SHOW ALL SORT BY MARK") == 0 ||
         strcmp(command, "SHOW ALL SORT BY MARK ASCENDING") == 0) return 10;
     if (strcmp(command, "SHOW ALL SORT BY MARK DESCENDING") == 0) return 11;
+
+    // Sorting commands - Name (NEW ADDITION)
+    if (strcmp(command, "SHOW ALL SORT BY NAME") == 0 ||
+        strcmp(command, "SHOW ALL SORT BY NAME ASCENDING") == 0) return 15;
+    if (strcmp(command, "SHOW ALL SORT BY NAME DESCENDING") == 0) return 16;
 
     // Partial match commands
     if (strncmp(command, "INSERT", 6) == 0) return 3;
@@ -134,6 +141,14 @@ int main() {
 
         case 14:  // SHOW GPA ID=
             showGPAForID(command);
+            break;
+
+        case 15: // SORT BY NAME ASCENDING (NEW)
+            sortByName(0);
+            break;
+
+        case 16: // SORT BY NAME DESCENDING (NEW)
+            sortByName(1);
             break;
 
         default:  // Invalid command

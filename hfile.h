@@ -26,6 +26,7 @@ void deleteRecord(char* command);
 void saveDatabase();
 void sortByID(int descending);
 void sortByMark(int descending);
+void sortByName(int descending);
 void showSummary();
 int findRecordIndexByID(int id);
 int loadFromFile();
