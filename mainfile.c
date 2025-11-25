@@ -18,7 +18,7 @@ int getCommandType(const char* command) {
     if (strcmp(command, "OPEN") == 0) return 1;
     if (strcmp(command, "SHOW ALL") == 0) return 2;
     if (strcmp(command, "SAVE") == 0) return 7;
-    if (strcmp(command, "SHOW SUMMARY") == 0) return 11;
+    if (strcmp(command, "SHOW SUMMARY") == 0) return 12;
     if (strcmp(command, "SHOW ALL WITH GRADES") == 0) return 12;
 
     // Sorting commands
@@ -54,15 +54,15 @@ int main() {
     printf("of the assessments involved will receive ZERO mark.\n\n");
 
     printf("We hereby declare that:\n");
-    printf("• We fully understand and agree to the abovementioned plagiarism policy.\n");
-    printf("• We did not copy any code from others or from other places.\n");
-    printf("• We did not share our codes with others or upload to any other places\n");
+    printf("â€¢ We fully understand and agree to the abovementioned plagiarism policy.\n");
+    printf("â€¢ We did not copy any code from others or from other places.\n");
+    printf("â€¢ We did not share our codes with others or upload to any other places\n");
     printf("  for public access and will not do that in the future.\n");
-    printf("• We agree that our project will receive Zero mark if there is any\n");
+    printf("â€¢ We agree that our project will receive Zero mark if there is any\n");
     printf("  plagiarism detected.\n");
-    printf("• We agree that we will not disclose any information or material of\n");
+    printf("â€¢ We agree that we will not disclose any information or material of\n");
     printf("  the group project to others or upload to any other places for public access.\n");
-    printf("• We agree that we did not copy any code directly from AI generated sources\n\n");
+    printf("â€¢ We agree that we did not copy any code directly from AI generated sources\n\n");
 
     printf("Declared by: Group Name P6_9\n\n");
     printf("Team members:\n");
