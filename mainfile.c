@@ -34,13 +34,43 @@ int getCommandType(const char* command) {
     if (strncmp(command, "QUERY", 5) == 0) return 4;
     if (strncmp(command, "UPDATE", 6) == 0) return 5;
     if (strncmp(command, "DELETE", 6) == 0) return 6;
-    if (strncmp(command, "SHOW GPA ID=", 12) == 0) return 13;
+    if (strncmp(command, "SHOW GPA ID", 12) == 0) return 13;
 
     return 0;  // Invalid command
 }
 
 int main() {
     char command[100];
+
+    printf("\n==============================================================\n");
+    printf("                        DECLARATION                           \n");
+    printf("==============================================================\n");
+    printf("SIT's policy on copying does not allow the students to copy\n");
+    printf("source code as well as assessment solutions from another person\n");
+    printf("AI or other places. It is the students' responsibility to\n");
+    printf("guarantee that their assessment solutions are their own work.\n");
+    printf("Meanwhile, the students must also ensure that their work is not\n");
+    printf("accessible by others. Where such plagiarism is detected, both\n");
+    printf("of the assessments involved will receive ZERO mark.\n\n");
+
+    printf("We hereby declare that:\n");
+    printf("• We fully understand and agree to the abovementioned plagiarism policy.\n");
+    printf("• We did not copy any code from others or from other places.\n");
+    printf("• We did not share our codes with others or upload to any other places\n");
+    printf("  for public access and will not do that in the future.\n");
+    printf("• We agree that our project will receive Zero mark if there is any\n");
+    printf("  plagiarism detected.\n");
+    printf("• We agree that we will not disclose any information or material of\n");
+    printf("  the group project to others or upload to any other places for public access.\n");
+    printf("• We agree that we did not copy any code directly from AI generated sources\n\n");
+
+    printf("Declared by: Group Name P6_9\n\n");
+    printf("Team members:\n");
+    printf("1. HAFIZHAH MUNIRAH BINTE MAZLAN\n");
+    printf("2. MUHAMMAD AQIF BIN NOORAZMAN\n");
+    printf("3. ONG SHI JIE INGMAR\n\n");
+    printf("Date: 25/11/2025\n");
+    printf("==============================================================\n\n");
 
     loadFromFile();
     while (1) {
