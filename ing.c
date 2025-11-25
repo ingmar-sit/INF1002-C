@@ -43,7 +43,10 @@ void showSummary() {
     int totalStudents = numRecords;
     float totalMarks = 0;
     float highestMark = records[0].mark, lowestMark = records[0].mark;
-    char highestName[100], lowestName[100];
+    char highestName[100];
+    char lowestName[100];
+    strcpy(highestName, records[0].name);
+    strcpy(lowestName, records[0].name);
 
     for (int i = 0; i < numRecords; i++) {
         totalMarks += records[i].mark;
